@@ -42,7 +42,7 @@ export const ItemList: FormItem[] = [
         label: null,
         elementTag: "select",
         path: "city",
-        options: cityOptions,
+        // options: cityOptions,
       },
 
     ],

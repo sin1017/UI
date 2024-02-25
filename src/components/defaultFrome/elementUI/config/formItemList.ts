@@ -1,8 +1,8 @@
-import type { FormItem, Options, OptionsKey } from "./type";
+import type { FormItem, SelectOptions } from "./type";
 import type { UploadProps, UploadUserFile } from "element-plus";
 import cityList from './taiwanMapList';
 import areaList from './taiwanMapList';
-const cityOptions = ref<Options | []>([]);
+const cityOptions = ref<SelectOptions | []>([]);
 
 export const ItemList: FormItem[] = [
   {
@@ -17,6 +17,28 @@ export const ItemList: FormItem[] = [
         trigger: "change",
       },
     ],
+  },
+  {
+    label: "生日",
+    path: "birthday",
+    elementTag: "date",
+    placeholder: "請選擇出生年月日",
+    size: "large"
+  },
+  {
+    label: "性別",
+    path: "gender",
+    elementTag: "radio",
+    options: [
+      {
+        label: "women",
+        value: "女"
+      },
+      {
+        label: "man",
+        value: "男"
+      },
+    ]
   },
   {
     label: "手機",
@@ -43,26 +65,15 @@ export const ItemList: FormItem[] = [
         label: null,
         elementTag: "select",
         path: "city",
-        options: cityOptions.value,
-        getOptions: () => {
-          return new Promise((resolve, reject) => {
-            setTimeout(() => {
-              resolve(cityList)
-            }, 1500)
-          })
-        }
+        options: cityList,
       },
       {
         label: null,
         elementTag: "select",
         path: "area",
         options: cityOptions.value,
-        getOptions: () => {
-          return new Promise((resolve, reject) => {
-            setTimeout(() => {
-              resolve(areaList)
-            }, 1500)
-          })
+        filterOptions: (id: number) => {
+          cityOptions.value = areaList[id];
         }
       },
     ],

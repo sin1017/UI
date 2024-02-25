@@ -1,6 +1,6 @@
-import type { Options, OptionsKey } from "./type";
+import type { SelectOptions, SelectOptionsKey } from "./type";
 
-const cityList: Options = [
+const cityList: SelectOptions = [
   { id: 1, label: "臺北市", value: "臺北市" },
   { id: 2, label: "新北市", value: "新北市" },
   { id: 3, label: "桃園市", value: "桃園市" },
@@ -25,7 +25,7 @@ const cityList: Options = [
   { id: 22, label: "連江縣", value: "連江縣" },
 ];
 
-const areaList: Record<number, { label: string; value: string; }[]> = {
+const areaList: SelectOptionsKey = {
   1: [ // 臺北市
     { label: "中正區", value: "中正區" },
     { label: "大同區", value: "大同區" },

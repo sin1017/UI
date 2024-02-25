@@ -1,14 +1,14 @@
-export type OptionsKey = {
+export type SelectOptionsKey = {
   [key: number]: {
     label: string;
     value: string;
   }[]
 }
 
-export type Options = {
+export type SelectOptions = {
   id?: number;
-  label?: string;
-  value?: number | string;
+  label: string;
+  value: number | string;
 }[];
 
 
@@ -33,9 +33,10 @@ export type FormItem = {
   multiple?: boolean;
   darg?: boolean;
   placeholder?: string;
-  options?: Options;
-  size?: "small" | "medium" | "large";
-  getOptions?: () => Promise<Options>;
+  options?: SelectOptions;
+  size?: "small" | "medium" | "large" | "default";
+  getOptions?: () => Promise<SelectOptions | SelectOptionsKey> | SelectOptions | SelectOptionsKey;
+  filterOptions?: (value: number | string) => void;
   formatter?: () => void;
   children?: {
     label: string | null;
@@ -47,8 +48,9 @@ export type FormItem = {
     gutter?: number;
     span?: number;
     placeholder?: string;
-    options?: Options | OptionsKey;
-    getOptions?: () => Promise<Options | OptionsKey>;
-    filterOptions?: () => void;
+    options?: SelectOptions | SelectOptionsKey;
+    getOptions?: () => Promise<SelectOptions | SelectOptionsKey> | SelectOptions | SelectOptionsKey;
+    filterOptions?: (value: number | string) => void;
+    formatter?: () => void;
   }[]
 }

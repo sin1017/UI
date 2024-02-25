@@ -1,6 +1,14 @@
+export type OptionsKey = {
+  [key: number]: {
+    label: string;
+    value: string;
+  }[]
+}
+
 export type Options = {
-  label: string;
-  value: number | string;
+  id?: number;
+  label?: string;
+  value?: number | string;
 }[];
 
 
@@ -39,7 +47,8 @@ export type FormItem = {
     gutter?: number;
     span?: number;
     placeholder?: string;
-    options?: Options;
+    options?: Options | OptionsKey;
+    getOptions?: () => Promise<Options | OptionsKey>;
     filterOptions?: () => void;
   }[]
 }

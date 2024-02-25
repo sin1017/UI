@@ -1,6 +1,7 @@
-import type { FormItem, Options } from "./type";
+import type { FormItem, Options, OptionsKey } from "./type";
 import type { UploadProps, UploadUserFile } from "element-plus";
-
+import cityList from './taiwanMapList';
+import areaList from './taiwanMapList';
 const cityOptions = ref<Options | []>([]);
 
 export const ItemList: FormItem[] = [
@@ -42,10 +43,28 @@ export const ItemList: FormItem[] = [
         label: null,
         elementTag: "select",
         path: "city",
-        // options: cityOptions,
+        options: cityOptions.value,
+        getOptions: () => {
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              resolve(cityList)
+            }, 1500)
+          })
+        }
       },
-
+      {
+        label: null,
+        elementTag: "select",
+        path: "area",
+        options: cityOptions.value,
+        getOptions: () => {
+          return new Promise((resolve, reject) => {
+            setTimeout(() => {
+              resolve(areaList)
+            }, 1500)
+          })
+        }
+      },
     ],
-
   },
 ];

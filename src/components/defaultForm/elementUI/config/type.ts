@@ -1,3 +1,6 @@
+type ElementTag = "input" | "date" | "radio" | "upload" | "group" | ""
+
+
 export type SelectOptionsKey = {
   [key: number]: {
     label: string;
@@ -27,8 +30,9 @@ export type FormItem = {
   inputMax?: number;
   inputStartSuffix?: string;
   inputEndSuffix?: string;
-  listType?: "text" | "picture" | "picture-card";
-  limit?: number;
+  inputClearable?: boolean;
+  uploadListType?: "text" | "picture" | "picture-card";
+  uploadLimit?: number;
   autoUpload?: boolean;
   multiple?: boolean;
   darg?: boolean;
@@ -53,4 +57,4 @@ export type FormItem = {
     filterOptions?: (value: number | string) => void;
     formatter?: () => void;
   }[]
-}
+}[];

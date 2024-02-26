@@ -1,10 +1,10 @@
 import type { FormItem, SelectOptions } from "./type";
 import type { UploadProps, UploadUserFile } from "element-plus";
-import cityList from './taiwanMapList';
-import areaList from './taiwanMapList';
+import cityList from "./taiwanMapList";
+import areaList from "./taiwanMapList";
 const cityOptions = ref<SelectOptions | []>([]);
 
-export const ItemList: FormItem[] = [
+export const itemList: FormItem[] = [
   {
     label: "姓名",
     path: "name",
@@ -23,7 +23,7 @@ export const ItemList: FormItem[] = [
     path: "birthday",
     elementTag: "date",
     placeholder: "請選擇出生年月日",
-    size: "large"
+    size: "large",
   },
   {
     label: "性別",
@@ -32,13 +32,13 @@ export const ItemList: FormItem[] = [
     options: [
       {
         label: "women",
-        value: "女"
+        value: "女",
       },
       {
         label: "man",
-        value: "男"
+        value: "男",
       },
-    ]
+    ],
   },
   {
     label: "手機",
@@ -74,8 +74,13 @@ export const ItemList: FormItem[] = [
         options: cityOptions.value,
         filterOptions: (id: number) => {
           cityOptions.value = areaList[id];
-        }
+        },
       },
     ],
+  },
+  {
+    label: "頭像",
+    path: "avatar",
+    elementTag: "upload",
   },
 ];

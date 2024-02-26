@@ -57,4 +57,4 @@ export type FormItem = {
     filterOptions?: (value: number | string) => void;
     formatter?: () => void;
   }[]
-}[];
+};

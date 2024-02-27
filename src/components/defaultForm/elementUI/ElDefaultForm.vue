@@ -8,7 +8,6 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {});
 const emits = defineEmits(["submit"]);
 const fromData = ref(props.formDataList);
-console.log(props.formDataList);
 
 onMounted(async () => {
   fromData.value = await Promise.all(

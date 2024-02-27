@@ -1,4 +1,4 @@
-type ElementTag = "input" | "date" | "radio" | "upload" | "group" | ""
+type ElementTag = "input" | "date" | "radio" | "upload" | "group" | "select"
 
 
 export type SelectOptionsKey = {
@@ -17,7 +17,7 @@ export type SelectOptions = {
 
 export type FormItem = {
   label: string;
-  elementTag: string;
+  elementTag: ElementTag;
   path: string;
   rules?: {
     required?: boolean;

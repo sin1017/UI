@@ -37,7 +37,7 @@ export type FormItem = {
   multiple?: boolean;
   darg?: boolean;
   placeholder?: string;
-  options?: SelectOptions;
+  options?: SelectOptions | SelectOptionsKey;
   size?: "small" | "medium" | "large" | "default";
   getOptions?: () => Promise<SelectOptions | SelectOptionsKey> | SelectOptions | SelectOptionsKey;
   filterOptions?: (value: number | string) => void;

@@ -1,4 +1,4 @@
-import type { SelectOptions, SelectOptionsKey } from "./type";
+import type { SelectOptions, SelectOptionsKey } from "../../../components/defaultForm/elementUI/config/type";
 
 const cityList: SelectOptions = [
   { id: 1, label: "臺北市", value: "臺北市" },

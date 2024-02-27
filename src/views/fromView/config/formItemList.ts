@@ -1,4 +1,7 @@
-import type { FormItem, SelectOptions } from "./type";
+import type {
+  FormItem,
+  SelectOptions,
+} from "@/components/defaultForm/elementUI/config/type";
 import type { UploadProps, UploadUserFile } from "element-plus";
 import cityList from "./taiwanMapList";
 import areaList from "./taiwanMapList";

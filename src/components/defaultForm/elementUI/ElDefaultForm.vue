@@ -1,27 +1,27 @@
 <script setup lang="ts">
 import type { FormItem } from "./config/type";
 
-interface Props<T = any> {
-  formItemListConfig: FormItem;
-  formDataList: T;
+interface Props {
+  formDataList: FormItem[];
 }
 
 const props = withDefaults(defineProps<Props>(), {});
 const emits = defineEmits(["submit"]);
 const fromData = ref(props.formDataList);
+console.log(props.formDataList);
 
 onMounted(async () => {
   fromData.value = await Promise.all(
-    props.formItemListConfig.map(async (item) => {
+    props.formDataList?.map(async (item) => {
       if (item.elementTag === "select" && item.getOptions) {
         item.options = await item.getOptions();
       }
-      if (
-        item.children &&
-        item.children.elementTag === "select" &&
-        item.children.getOptions
-      ) {
-        item.children.options = await item.children.getOptions();
+      if (item.children) {
+        item.children.forEach(async (childrenItem) => {
+          if (childrenItem.elementTag === "select" && childrenItem.getOptions) {
+            childrenItem.options = await childrenItem.getOptions();
+          }
+        });
       }
       return { ...item };
     })
@@ -31,7 +31,7 @@ onMounted(async () => {
 
 <template>
   <ElForm :model="fromData">
-    <ElFormItem v-for="item in props.formItemListConfig">
+    <ElFormItem v-for="item in props.formDataList">
       <ElInput v-if="item.elementTag === 'input'" v-model="fromData[item.path]" />
     </ElFormItem>
   </ElForm>

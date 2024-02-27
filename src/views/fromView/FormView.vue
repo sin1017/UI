@@ -4,5 +4,7 @@ import ElDefaultForm from "@/components/defaultForm/elementUI/ElDefaultForm.vue"
 </script>
 
 <template>
-  <ElDefaultForm :formDataList="itemList" />
+  <div class="w-72">
+    <ElDefaultForm :formDataList="itemList" />
+  </div>
 </template>

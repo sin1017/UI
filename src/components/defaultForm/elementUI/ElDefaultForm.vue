@@ -29,9 +29,11 @@ onMounted(async () => {
 </script>
 
 <template>
-  <ElForm :model="fromData">
-    <ElFormItem v-for="item in props.formDataList">
-      <ElInput v-if="item.elementTag === 'input'" v-model="fromData[item.path]" />
-    </ElFormItem>
-  </ElForm>
+  <div class="w-96 border border-cyan-950">
+    <ElForm :model="fromData">
+      <ElFormItem v-for="item in props.formDataList" :label="item.label">
+        <ElInput v-if="item.elementTag === 'input'" v-model="fromData[item.path]" />
+      </ElFormItem>
+    </ElForm>
+  </div>
 </template>

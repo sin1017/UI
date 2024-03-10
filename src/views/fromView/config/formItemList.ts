@@ -2,8 +2,6 @@ import type { FormItem, Options } from "@/components/defaultForm/elementUI/confi
 import type { UploadProps, UploadUserFile } from "element-plus";
 import { cityList, areaList } from "./taiwanMapList";
 
-const areaOptions = ref<Options[] | []>([]);
-
 export const itemList: FormItem[] = [
   {
     label: "姓名",
@@ -71,10 +69,8 @@ export const itemList: FormItem[] = [
         placeholder: "請選擇縣市",
         filterOptions: (value: string) => {
           const filterResult = areaList.find((item) => item.label === value);
-
-          areaOptions.value = filterResult ? filterResult.value : [];
-          console.log(areaOptions.value);
-
+          const areas = filterResult ? filterResult.value : [];
+          itemList.find(item => item.path === 'address').children.find(child => child.path === 'area').options = areas;
         },
       },
       {
@@ -82,7 +78,7 @@ export const itemList: FormItem[] = [
         elementTag: "select",
         path: "area",
         span: 10,
-        options: areaOptions.value,
+        options:  [],
         placeholder: "請選擇區域",
       },
       {

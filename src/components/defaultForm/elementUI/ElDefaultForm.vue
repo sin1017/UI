@@ -14,6 +14,7 @@ const formRef = ref();
 const formRules = computed(() => getFormRulesConfig(props.formItemList));
 const testCityList = ref();
 const areaListOptions = ref();
+
 function filterAreaListOptions() {
   areaListOptions.value = areaList.filter(
     (item) => item.label === testCityList.value
@@ -37,9 +38,9 @@ function getFormRulesConfig(param: Pick<FormItem, "path" | "rules" | "children">
       (result, { rules, path }) =>
         rules
           ? {
-              ...result,
-              [path]: rules,
-            }
+            ...result,
+            [path]: rules,
+          }
           : result,
       {} as ResultObj
     );
@@ -56,7 +57,7 @@ onMounted(async () => {
 
       if (item.children) {
         await Promise.allSettled(
-          item.children.forEach(async (childrenItem) => {
+          item.children.map(async (childrenItem) => {
             if (childrenItem.elementTag === "select" && childrenItem.getOptions) {
               childrenItem.options = await childrenItem.getOptions();
             }
@@ -76,62 +77,29 @@ onMounted(async () => {
   <div class="w-96 border border-cyan-950 p-5">
     <ElForm ref="formRef" :model="formData" :rules="formRules">
       <ElFormItem v-for="item in props.formItemList" :label="item.label">
-        <ElInput
-          v-if="item.elementTag === 'input'"
-          v-model="formData[item.path]"
-          :minlength="item.inputMain"
-          :maxlength="item.inputMax"
-          :clearable="item?.clearableStatus"
-        />
-        <ElInputNumber
-          v-if="item.elementTag === 'inputNumber'"
-          v-model="formData[item.path]"
-          :minlength="item.inputMain"
-          :maxlength="item.inputMax"
-          :clearable="item?.clearableStatus"
-        />
-        <ElDatePicker
-          v-if="item.elementTag === 'date'"
-          type="date"
-          :placeholder="item.placeholder"
-          :size="item.dateSize"
-        />
-        <ElRadioGroup
-          v-if="item.elementTag === 'radio'"
-          v-model="formData[item.path]"
-          class="flex flex-row"
-        >
+        <ElInput v-if="item.elementTag === 'input'" v-model="formData[item.path]" :minlength="item.inputMain"
+                 :maxlength="item.inputMax" :clearable="item?.clearableStatus" />
+        <ElInputNumber v-if="item.elementTag === 'inputNumber'" v-model="formData[item.path]"
+                       :minlength="item.inputMain" :maxlength="item.inputMax" :clearable="item?.clearableStatus" />
+        <ElDatePicker v-if="item.elementTag === 'date'" type="date" :placeholder="item.placeholder"
+                      :size="item.dateSize" />
+        <ElRadioGroup v-if="item.elementTag === 'radio'" v-model="formData[item.path]" class="flex flex-row">
           <ElRadio v-for="optionsItem in item.options" :value="optionsItem.label">
             {{ optionsItem.value }}
           </ElRadio>
         </ElRadioGroup>
         <ElFormItem v-if="item.elementTag === 'group' && item.children">
-          <ElCol
-            v-for="childrenItem in item.children"
-            :span="childrenItem.span"
-            :kye="childrenItem"
-            class="mr-2 mb-2"
-          >
+          <ElCol v-for="childrenItem in item.children" :span="childrenItem.span" :kye="childrenItem" class="mr-2 mb-2">
             <!--  -->
-            <ElSelect
-              v-if="childrenItem.elementTag === 'select'"
-              v-model="formData[item.path][childrenItem.path]"
-              :placeholder="childrenItem.placeholder"
-              @change="childrenItem.filterOptions"
-            >
-              <ElOption
-                v-for="selectOption in childrenItem.options"
-                :label="selectOption?.label"
-                :value="selectOption?.value"
-                remote
-              />
+            <ElSelect v-if="childrenItem.elementTag === 'select'" v-model="formData[item.path][childrenItem.path]"
+                      :placeholder="childrenItem.placeholder" @change="childrenItem.filterOptions">
+              <ElOption v-for="selectOption in childrenItem.options" :label="selectOption?.label"
+                        :value="selectOption?.value" remote />
             </ElSelect>
-            <ElInput
-              v-if="childrenItem.elementTag === 'input'"
-              :placeholder="childrenItem.placeholder"
-            />
+            <ElInput v-if="childrenItem.elementTag === 'input'" :placeholder="childrenItem.placeholder" />
           </ElCol>
         </ElFormItem>
+        <!-- <ELUpload v-if="item.elementTag === 'upload'" /> -->
       </ElFormItem>
       <!-- test element component -->
       <ElFormItem>
@@ -139,11 +107,7 @@ onMounted(async () => {
           <ElOption v-for="item in cityList" :label="item.label" :value="item.value" />
         </ElSelect>
         <ElSelect>
-          <ElOption
-            v-for="item2 in areaListOptions"
-            :label="item2.label"
-            :value="item2.value"
-          />
+          <ElOption v-for="item2 in areaListOptions" :label="item2.label" :value="item2.value" />
         </ElSelect>
       </ElFormItem>
     </ElForm>

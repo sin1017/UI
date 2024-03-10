@@ -1,11 +1,8 @@
-import type {
-  FormItem,
-  SelectOptions,
-} from "@/components/defaultForm/elementUI/config/type";
+import type { FormItem, Options } from "@/components/defaultForm/elementUI/config/type";
 import type { UploadProps, UploadUserFile } from "element-plus";
-import cityList from "./taiwanMapList";
-import areaList from "./taiwanMapList";
-const cityOptions = ref<SelectOptions | []>([]);
+import { cityList, areaList } from "./taiwanMapList";
+
+const areaOptions = ref<Options[] | []>([]);
 
 export const itemList: FormItem[] = [
   {
@@ -13,6 +10,7 @@ export const itemList: FormItem[] = [
     path: "name",
     elementTag: "input",
     placeholder: "請輸入姓名",
+    clearableStatus: false,
     rules: [
       {
         required: true,
@@ -26,7 +24,7 @@ export const itemList: FormItem[] = [
     path: "birthday",
     elementTag: "date",
     placeholder: "請選擇出生年月日",
-    size: "large",
+    dateSize: "large",
   },
   {
     label: "性別",
@@ -68,16 +66,31 @@ export const itemList: FormItem[] = [
         label: null,
         elementTag: "select",
         path: "city",
+        span: 10,
         options: cityList,
+        placeholder: "請選擇縣市",
+        filterOptions: (value: string) => {
+          const filterResult = areaList.find((item) => item.label === value);
+
+          areaOptions.value = filterResult ? filterResult.value : [];
+          console.log(areaOptions.value);
+
+        },
       },
       {
         label: null,
         elementTag: "select",
         path: "area",
-        options: cityOptions.value,
-        filterOptions: (id: number) => {
-          cityOptions.value = areaList[id];
-        },
+        span: 10,
+        options: areaOptions.value,
+        placeholder: "請選擇區域",
+      },
+      {
+        label: null,
+        elementTag: "input",
+        path: "address",
+        span: 20,
+        placeholder: "請輸入地址",
       },
     ],
   },
@@ -87,3 +100,15 @@ export const itemList: FormItem[] = [
     elementTag: "upload",
   },
 ];
+
+export type FormDataList = {
+  name: string;
+  birthday: string;
+  gender: string;
+  phone: number | null;
+  address: {
+    city: string | null;
+    area: string | null;
+    address: string | null;
+  };
+};

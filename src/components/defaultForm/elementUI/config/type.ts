@@ -1,29 +1,33 @@
-type ElementTag = "input" | "date" | "radio" | "upload" | "group" | "select"
+type ElementTag =
+  | "input"
+  | "inputNumber"
+  | "date"
+  | "radio"
+  | "upload"
+  | "group"
+  | "select";
 
-
-export type SelectOptionsKey = {
-  [key: number]: {
-    label: string;
-    value: string;
-  }[]
-}
-
-export type SelectOptions = {
-  id?: number;
+export type Options = {
   label: string;
-  value: number | string;
-}[];
+  value: string | Options[];
+};
 
 
-export type FormItem = {
-  label: string;
+
+type Size = "small" | "large" | "default";
+
+export type ItemType = {
+  label: string | null;
   elementTag: ElementTag;
   path: string;
   rules?: {
     required?: boolean;
-    message: string;
-    trigger: "blur" | "change" | ["blur" | "change"]
-  }[],
+    min?: number;
+    max?: number;
+    message?: string;
+    trigger?: "blur" | "change" | ["blur" | "change"];
+    validator?: () => void;
+  }[];
   type?: string;
   inputType?: "text" | "textarea" | "password" | "number";
   inputMain?: number;
@@ -31,30 +35,22 @@ export type FormItem = {
   inputStartSuffix?: string;
   inputEndSuffix?: string;
   inputClearable?: boolean;
+  clearableStatus?: boolean;
   uploadListType?: "text" | "picture" | "picture-card";
   uploadLimit?: number;
   autoUpload?: boolean;
   multiple?: boolean;
   darg?: boolean;
   placeholder?: string;
-  options?: SelectOptions | SelectOptionsKey;
-  size?: "small" | "medium" | "large" | "default";
-  getOptions?: () => Promise<SelectOptions | SelectOptionsKey> | SelectOptions | SelectOptionsKey;
+  options?: Options[];
+  size?: Size | "medium";
+  dateSize?: Size;
+  span?: number;
+  getOptions?: () => Promise<Options[]> | Options[];
   filterOptions?: (value: number | string) => void;
   formatter?: () => void;
-  children?: {
-    label: string | null;
-    elementTag: string;
-    path: string;
-    type?: string;
-    inputStartSuffix?: string;
-    inputEndSuffix?: string;
-    gutter?: number;
-    span?: number;
-    placeholder?: string;
-    options?: SelectOptions | SelectOptionsKey;
-    getOptions?: () => Promise<SelectOptions | SelectOptionsKey> | SelectOptions | SelectOptionsKey;
-    filterOptions?: (value: number | string) => void;
-    formatter?: () => void;
-  }[]
 };
+
+export interface FormItem extends ItemType {
+  children?: ItemType[];
+}

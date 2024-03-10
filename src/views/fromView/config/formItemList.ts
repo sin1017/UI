@@ -78,10 +78,7 @@ export const itemList: FormItem[] = [
         label: null,
         elementTag: "select",
         selectRelation: "city",
-        selectRelationOption: areaList.reduce((acc, areaItem) => {
-          acc[areaItem.label] = areaItem.value;
-          return acc;
-        }, {}),
+        selectRelationOption: Object.fromEntries(areaList.map((item) => [item.label, item.value])),
         path: "area",
         span: 10,
         placeholder: "請選擇區域",

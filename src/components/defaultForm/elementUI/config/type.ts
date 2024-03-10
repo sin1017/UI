@@ -41,6 +41,7 @@ export type ItemType = {
   autoUpload?: boolean;
   multiple?: boolean;
   darg?: boolean;
+  selectRelation?: string;
   placeholder?: string;
   options?: Options[];
   size?: Size | "medium";

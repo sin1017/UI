@@ -491,7 +491,7 @@ export const areaList = [
     ]
   },
   {
-    label: '金門縣',
+    label: '連江縣',
     value: [ // 連江縣
       { label: "南竿鄉", value: "南竿鄉" },
       { label: "北竿鄉", value: "北竿鄉" },

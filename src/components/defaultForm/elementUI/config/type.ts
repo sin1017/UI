@@ -1,11 +1,4 @@
-type ElementTag =
-  | "input"
-  | "inputNumber"
-  | "date"
-  | "radio"
-  | "upload"
-  | "group"
-  | "select";
+type ElementTag = "input" | "inputNumber" | "date" | "radio" | "upload" | "group" | "select";
 
 export type Options = {
   label: string;
@@ -42,13 +35,14 @@ export type ItemType = {
   multiple?: boolean;
   darg?: boolean;
   selectRelation?: string;
+  selectRelationOption?: {};
   placeholder?: string;
   options?: Options[];
   size?: Size | "medium";
   dateSize?: Size;
   span?: number;
   getOptions?: () => Promise<Options[]> | Options[];
-  filterOptions?: (value: number | string) => void;
+  filterOptions?: ({ formData, item }) => void;
   formatter?: () => void;
 };
 

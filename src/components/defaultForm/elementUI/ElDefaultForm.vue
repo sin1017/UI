@@ -107,16 +107,28 @@ onMounted(async () => {
             class="mr-2 mb-2"
           >
             <ElSelect
-              v-if="childrenItem.elementTag === 'select'"
+              v-if="childrenItem.elementTag === 'select' && childrenItem.selectRelation"
               v-model="formData[item.path][childrenItem.path]"
               :placeholder="childrenItem.placeholder"
-              @change="childrenItem.filterOptions"
+            >
+              <ElOption
+                v-for="selectOption in childrenItem.selectRelationOption[
+                  formData[item.path][childrenItem.selectRelation]
+                ]"
+                :label="selectOption?.label"
+                :value="selectOption?.value"
+              />
+            </ElSelect>
+            <ElSelect
+              v-else-if="childrenItem.elementTag === 'select'"
+              v-model="formData[item.path][childrenItem.path]"
+              :placeholder="childrenItem.placeholder"
+              @change="childrenItem.filterOptions({formData, item})"
             >
               <ElOption
                 v-for="selectOption in childrenItem.options"
                 :label="selectOption?.label"
                 :value="selectOption?.value"
-                remote
               />
             </ElSelect>
             <ElInput

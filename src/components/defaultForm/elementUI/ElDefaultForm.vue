@@ -123,7 +123,7 @@ onMounted(async () => {
               v-else-if="childrenItem.elementTag === 'select'"
               v-model="formData[item.path][childrenItem.path]"
               :placeholder="childrenItem.placeholder"
-              @change="childrenItem.filterOptions({formData, item})"
+              @change="childrenItem.filterOptions({ formData, item })"
             >
               <ElOption
                 v-for="selectOption in childrenItem.options"
@@ -137,7 +137,7 @@ onMounted(async () => {
             />
           </ElCol>
         </ElFormItem>
-        <!-- <ELUpload v-if="item.elementTag === 'upload'" /> -->
+        <ELUpload v-if="item.elementTag === 'upload'" action="#" />
       </ElFormItem>
     </ElForm>
   </div>

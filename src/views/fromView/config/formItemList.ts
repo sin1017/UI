@@ -96,6 +96,7 @@ export const itemList: FormItem[] = [
     label: "頭像",
     path: "avatar",
     elementTag: "upload",
+
   },
 ];
 

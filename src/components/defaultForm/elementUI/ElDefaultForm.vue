@@ -136,7 +136,14 @@ onMounted(async () => {
             />
           </ElCol>
         </ElFormItem>
-        <ELUpload v-if="item.elementTag === 'upload'" action="#" />
+        <ElUpload
+          v-if="item.elementTag === 'upload'"
+          action="#"
+          list-type="picture-card"
+          :auto-upload="false"
+        >
+          <el-icon><Plus /></el-icon>
+        </ElUpload>
       </ElFormItem>
     </ElForm>
   </div>

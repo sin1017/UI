@@ -5,13 +5,6 @@ interface Props<T = any> {
   formDataList: T;
   formItemList: FormItem[];
 }
-const props = withDefaults(defineProps<Props>(), {});
-const emits = defineEmits(["submit"]);
-const formData = ref(props.formDataList);
-const formItemList = ref<FormItem[]>();
-const formRef = ref();
-const formRules = computed(() => getFormRulesConfig(props.formItemList));
-
 type ResultObj = {
   [key: string]: {
     required?: boolean;
@@ -19,6 +12,12 @@ type ResultObj = {
     trigger?: "blur" | "change" | ["blur" | "change"];
   }[];
 };
+const props = withDefaults(defineProps<Props>(), {});
+const emits = defineEmits(["submit"]);
+const formData = ref(props.formDataList);
+const formItemList = ref<FormItem[]>();
+const formRef = ref();
+const formRules = computed(() => getFormRulesConfig(props.formItemList));
 
 function getFormRulesConfig(param: Pick<FormItem, "path" | "rules" | "children">[]) {
   return param

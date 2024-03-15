@@ -64,13 +64,15 @@ export const itemList: FormItem[] = [
         label: null,
         elementTag: "select",
         path: "city",
-        span: 10,
+        span: 8,
         options: cityList,
         placeholder: "請選擇縣市",
         filterOptions: ({ formData, item }) => {
-          const target = item.children.find((childrenItem) => Object.keys(childrenItem).includes('selectRelation'))
+          const target = item.children.find((childrenItem) =>
+            Object.keys(childrenItem).includes("selectRelation")
+          );
           if (target) {
-            formData[item.path][target.path] = null
+            formData[item.path][target.path] = null;
           }
         },
       },
@@ -78,16 +80,18 @@ export const itemList: FormItem[] = [
         label: null,
         elementTag: "select",
         selectRelation: "city",
-        selectRelationOption: Object.fromEntries(areaList.map((item) => [item.label, item.value])),
+        selectRelationOption: Object.fromEntries(
+          areaList.map((item) => [item.label, item.value])
+        ),
         path: "area",
-        span: 10,
+        span: 8,
         placeholder: "請選擇區域",
       },
       {
         label: null,
         elementTag: "input",
         path: "address",
-        span: 20,
+        span: 24,
         placeholder: "請輸入地址",
       },
     ],
@@ -96,7 +100,20 @@ export const itemList: FormItem[] = [
     label: "頭像",
     path: "avatar",
     elementTag: "upload",
-
+    uploadListType: "picture-card",
+    uploadLimit: 1,
+    uploadRequest: async () => {
+      return await new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(
+            {
+              success: true,
+              message: "成功"
+            }
+          );
+        }, 1500)
+      })
+    }
   },
 ];
 

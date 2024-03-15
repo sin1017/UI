@@ -9,7 +9,7 @@ export type Options = {
 
 type Size = "small" | "large" | "default";
 
-export type ItemType = {
+export interface ItemType<T = any> {
   label: string | null;
   elementTag: ElementTag;
   path: string;
@@ -44,6 +44,8 @@ export type ItemType = {
   getOptions?: () => Promise<Options[]> | Options[];
   filterOptions?: ({ formData, item }) => void;
   formatter?: () => void;
+  uploadRequest?: () => Promise<T>;
+  uploadRemove?: () => Promise<T> | void;
 };
 
 export interface FormItem extends ItemType {

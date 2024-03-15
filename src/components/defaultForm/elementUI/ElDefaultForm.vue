@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { FormItem, ItemType } from "./config/type";
+import type { UploadProps, UploadUserFile } from "element-plus";
 
 interface Props<T = any> {
   formDataList: T;
@@ -36,7 +37,6 @@ function getFormRulesConfig(param: Pick<FormItem, "path" | "rules" | "children">
       {} as ResultObj
     );
 }
-
 onMounted(async () => {
   const promiseResult = await Promise.allSettled(
     props.formItemList?.map(async (item: any) => {
@@ -65,8 +65,10 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="w-96 border border-cyan-950 p-5">
-    <ElForm ref="formRef" :model="formData" :rules="formRules">
+  <div
+    class="w-96 h-fit p-5 border-1 border-solid rounded-lg border-[#bbbdc1] shadow-2xl"
+  >
+    <ElForm ref="formRef" :model="formData" :rules="formRules" class="drop-shadow-md">
       <ElFormItem v-for="item in props.formItemList" :label="item.label">
         <ElInput
           v-if="item.elementTag === 'input'"
@@ -74,6 +76,7 @@ onMounted(async () => {
           :minlength="item.inputMain"
           :maxlength="item.inputMax"
           :clearable="item?.clearableStatus"
+          class="w-1/4"
         />
         <ElInputNumber
           v-if="item.elementTag === 'inputNumber'"
@@ -98,7 +101,7 @@ onMounted(async () => {
             {{ optionsItem.value }}
           </ElRadio>
         </ElRadioGroup>
-        <ElFormItem v-if="item.elementTag === 'group' && item.children">
+        <ElFormItem v-if="item.elementTag === 'group' && item.children" class="w-full">
           <ElCol
             v-for="childrenItem in item.children"
             :span="childrenItem.span"
@@ -133,17 +136,28 @@ onMounted(async () => {
             <ElInput
               v-if="childrenItem.elementTag === 'input'"
               :placeholder="childrenItem.placeholder"
+              class="w-1/3"
             />
           </ElCol>
         </ElFormItem>
         <ElUpload
           v-if="item.elementTag === 'upload'"
-          action="#"
-          list-type="picture-card"
-          :auto-upload="false"
+          action=""
+          v-model:file-list="formData[item.path]"
+          :list-type="item.uploadListType"
+          :http-request="item.uploadRequest"
+          :limit="item.uploadLimit ?? 1"
         >
-          <el-icon><Plus /></el-icon>
+          <slot v-if="$slots.upload" name="upload" />
+          <el-icon v-else><Plus /></el-icon>
         </ElUpload>
+      </ElFormItem>
+      <ElFormItem>
+        <slot v-if="$slots.footer" name="footer" />
+        <div v-else class="w-full flex items-center justify-evenly">
+          <button class="btn">取消</button>
+          <button class="btn">送出</button>
+        </div>
       </ElFormItem>
     </ElForm>
   </div>

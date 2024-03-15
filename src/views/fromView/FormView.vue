@@ -17,7 +17,11 @@ const formDataList = ref<FormDataList>({
 </script>
 
 <template>
-  <div class="w-full flex justify-center p-5">
-    <ElDefaultForm :formDataList="formDataList" :formItemList="itemList" />
+  <div class="w-full h-screen flex justify-center p-5 bg-slate-200">
+    <ElDefaultForm
+      :formDataList="formDataList"
+      :formItemList="itemList"
+      class="mt-9 bg-white"
+    />
   </div>
 </template>

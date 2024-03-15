@@ -156,7 +156,7 @@ onMounted(async () => {
         <slot v-if="$slots.footer" name="footer" />
         <div v-else class="w-full flex items-center justify-evenly">
           <button class="btn">取消</button>
-          <button class="btn">送出</button>
+          <button class="btn btn-primary">送出</button>
         </div>
       </ElFormItem>
     </ElForm>

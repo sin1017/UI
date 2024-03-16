@@ -12,6 +12,7 @@ type ResultObj = {
     required?: boolean;
     message?: string;
     trigger?: "blur" | "change" | ["blur" | "change"];
+    validator?: () => void;
   }[];
 };
 
@@ -50,6 +51,11 @@ async function handleSubmit() {
     }
     emits("submit", formData.value);
   });
+}
+function resetFormData() {
+  if (!formRef.value) return;
+  formRef.value.resetFields();
+  emits("cancel");
 }
 onMounted(async () => {
   const promiseResult = await Promise.allSettled(
@@ -175,7 +181,7 @@ onMounted(async () => {
     </ElForm>
     <slot name="footer" />
     <div class="w-full flex items-center justify-evenly">
-      <button class="btn" :class="cancelBtnStyle" @click="emits('cancel')">取消</button>
+      <button class="btn" :class="cancelBtnStyle" @click="resetFormData">取消</button>
       <button class="btn" :class="submitBtnStyle" @click="handleSubmit">送出</button>
     </div>
   </div>

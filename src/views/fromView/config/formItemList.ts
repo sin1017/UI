@@ -1,5 +1,4 @@
-import type { FormItem, Options } from "@/components/defaultForm/elementUI/config/type";
-import type { UploadProps, UploadUserFile } from "element-plus";
+import type { FormItem } from "@/components/defaultForm/elementUI/config/type";
 import { cityList, areaList } from "./taiwanMapList";
 
 export const itemList: FormItem[] = [

@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import type { FormItem, ItemType } from "./config/type";
-import type { UploadProps, UploadUserFile } from "element-plus";
+import type { FormItem, ButtonStyle } from "./config/type";
 
 interface Props<T = any> {
   formDataList: T;
   formItemList: FormItem[];
+  submitBtnStyle?: ButtonStyle;
+  cancelBtnStyle?: ButtonStyle;
 }
 type ResultObj = {
   [key: string]: {
@@ -13,8 +14,12 @@ type ResultObj = {
     trigger?: "blur" | "change" | ["blur" | "change"];
   }[];
 };
-const props = withDefaults(defineProps<Props>(), {});
-const emits = defineEmits(["submit"]);
+
+const props = withDefaults(defineProps<Props>(), {
+  submitBtnStyle: "btn-info",
+  cancelBtnStyle: "btn-outline-danger",
+});
+const emits = defineEmits(["submit", "cancel"]);
 const formData = ref(props.formDataList);
 const formItemList = ref<FormItem[]>();
 const formRef = ref();
@@ -36,6 +41,15 @@ function getFormRulesConfig(param: Pick<FormItem, "path" | "rules" | "children">
           : result,
       {} as ResultObj
     );
+}
+async function handleSubmit() {
+  if (!formRef.value) return;
+  await formRef.value.validate((valid, fields) => {
+    if (!valid) {
+      return;
+    }
+    emits("submit", formData.value);
+  });
 }
 onMounted(async () => {
   const promiseResult = await Promise.allSettled(
@@ -69,7 +83,13 @@ onMounted(async () => {
     class="w-96 h-fit p-5 border-1 border-solid rounded-lg border-[#bbbdc1] shadow-2xl"
   >
     <ElForm ref="formRef" :model="formData" :rules="formRules" class="drop-shadow-md">
-      <ElFormItem v-for="item in props.formItemList" :label="item.label">
+      <ElFormItem
+        v-for="item in props.formItemList"
+        :label="item.label"
+        :prop="item.path"
+        :class="{ 'pl-2': !formRules[item.path] }"
+        class="flex items-center"
+      >
         <ElInput
           v-if="item.elementTag === 'input'"
           v-model="formData[item.path]"
@@ -152,13 +172,72 @@ onMounted(async () => {
           <el-icon v-else><Plus /></el-icon>
         </ElUpload>
       </ElFormItem>
-      <ElFormItem>
-        <slot v-if="$slots.footer" name="footer" />
-        <div v-else class="w-full flex items-center justify-evenly">
-          <button class="btn">取消</button>
-          <button class="btn btn-primary">送出</button>
-        </div>
-      </ElFormItem>
     </ElForm>
+    <slot name="footer" />
+    <div class="w-full flex items-center justify-evenly">
+      <button class="btn" :class="cancelBtnStyle" @click="emits('cancel')">取消</button>
+      <button class="btn" :class="submitBtnStyle" @click="handleSubmit">送出</button>
+    </div>
   </div>
 </template>
+
+<style>
+.testPx {
+  padding: 0 2px;
+}
+.btn {
+  @apply relative flex items-center justify-center rounded-md border  px-5 py-2 text-sm font-semibold shadow-lg outline-none transition duration-300 hover:shadow-none;
+}
+.btn-lg {
+  @apply px-7 py-2.5 text-base;
+}
+.btn-sm {
+  @apply px-2.5 py-1.5 text-xs;
+}
+.btn[disabled],
+.btn[disabled]:hover {
+  @apply cursor-not-allowed opacity-60;
+}
+
+.btn-primary {
+  @apply border-[#4361ee] bg-[#4361ee] text-white shadow-[#4361ee]/60;
+}
+.btn-outline-primary {
+  @apply border-[#4361ee] text-[#4361ee]  shadow-[#989595]/60 hover:bg-[#4361ee] hover:text-white;
+}
+
+.btn-secondary {
+  @apply border-[#805dca] bg-[#805dca] text-white shadow-[#805dca]/60;
+}
+.btn-outline-secondary {
+  @apply border-[#805dca] text-[#805dca]  shadow-[#989595]/60 hover:bg-[#805dca] hover:text-white;
+}
+
+.btn-success {
+  @apply border-[#00ab55] bg-[#00ab55] text-white shadow-[#00ab55]/60;
+}
+.btn-outline-success {
+  @apply border-[#00ab55] text-[#00ab55]  shadow-[#989595]/60 hover:bg-[#00ab55] hover:text-white;
+}
+
+.btn-danger {
+  @apply border-[#e7515a] bg-[#e7515a] text-white shadow-[#e7515a]/60;
+}
+.btn-outline-danger {
+  @apply border-[#e7515a] text-[#e7515a] shadow-[#989595]/60  hover:bg-[#e7515a] hover:text-white;
+}
+
+.btn-warning {
+  @apply border-[#e2a03f] bg-[#e2a03f] text-white shadow-[#e2a03f]/60;
+}
+.btn-outline-warning {
+  @apply border-[#e2a03f] text-[#e2a03f]  shadow-[#989595]/60 hover:bg-[#e2a03f] hover:text-white;
+}
+
+.btn-info {
+  @apply border-[#2196f3] bg-[#2196f3] text-white shadow-[#2196f3]/60;
+}
+.btn-outline-info {
+  @apply border-[#2196f3] text-[#2196f3]  shadow-[#989595]/60 hover:bg-[#2196f3] hover:text-white;
+}
+</style>

@@ -1,13 +1,24 @@
 type ElementTag = "input" | "inputNumber" | "date" | "radio" | "upload" | "group" | "select";
+type Size = "small" | "large" | "default";
 
 export type Options = {
   label: string;
   value: string | Options[];
 };
 
-
-
-type Size = "small" | "large" | "default";
+export type ButtonStyle =
+  | "btn-primary"
+  | "btn-outline-primary"
+  | "btn-danger"
+  | "btn-outline-danger"
+  | "btn-secondary"
+  | "btn-outline-secondary"
+  | "btn-info"
+  | "btn-outline-info"
+  | "btn-success"
+  | "btn-outline-success"
+  | "btn-warning"
+  | "btn-outline-warning";
 
 export interface ItemType<T = any> {
   label: string | null;
@@ -51,3 +62,4 @@ export interface ItemType<T = any> {
 export interface FormItem extends ItemType {
   children?: ItemType[];
 }
+

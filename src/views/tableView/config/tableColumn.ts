@@ -10,28 +10,36 @@ export default [
   },
   {
     prop: "phone",
-    label: "手機",
-    children: [
-      {
-        prop: "phone",
-        label: "手機2",
-      },
-    ],
+    label: "電話",
+    // children: [
+    //   {
+    //     prop: "phoneNumber",
+    //     label: "手機",
+    //   },
+    //   {
+    //     prop: "phoneN",
+    //     label: "市話",
+    //   },
+    // ],
   },
   {
     prop: "balance",
     label: "投籃次數",
+    width: "100",
   },
   {
     prop: "wallet",
     label: "錢包(PHP)",
+    width: "100",
   },
   {
     prop: "loginTime",
     label: "最後登入時間",
+    width: "120",
   },
   {
     prop: "operator",
-    label: "操作",
+    label: "動作",
+    align: "center",
   },
 ];

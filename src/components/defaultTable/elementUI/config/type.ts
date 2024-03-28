@@ -1,4 +1,4 @@
-type ColumnItem = {
+export type ItemType = {
   label: string;
   prop: string;
   formatter?: (prop: any) => string;
@@ -11,6 +11,6 @@ type ColumnItem = {
   resizable?: boolean;
 };
 
-export interface ColumnList extends ColumnItem {
-  children?: ColumnItem[];
-}
+export interface ColumnItem extends ItemType {
+  children?: ItemType[];
+};

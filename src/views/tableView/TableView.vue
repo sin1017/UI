@@ -24,7 +24,7 @@ const data = [
     operator: "",
   },
 ];
-const tableColumn: ItemType[] = table;
+const tableColumns: ItemType[] = table;
 const dataList = ref([]);
 function logButton(param) {
   console.log("param", param);

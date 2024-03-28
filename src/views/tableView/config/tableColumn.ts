@@ -6,7 +6,7 @@ export default [
   {
     prop: "status",
     label: "狀態",
-    formatter: ({ status }) => (status ? "啟用" : "停用"),
+    // formatter: ({ status }) => (status ? "啟用" : "停用"),
   },
   {
     prop: "phone",

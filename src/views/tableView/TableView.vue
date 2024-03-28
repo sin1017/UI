@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import ElDefaultTable from "@/components/defaultTable/elementUI/ElDefaultTable.vue";
-import table from "./config/tableColumn";
+import tableData from "./config/tableColumn";
 import type { ItemType } from "@/components/defaultTable/elementUI/config/type";
 const data = [
   {
@@ -24,7 +24,7 @@ const data = [
     operator: "",
   },
 ];
-const tableColumns: ItemType[] = table;
+const tableColumns: ItemType[] = tableData as ItemType[];
 const dataList = ref([]);
 function logButton(param) {
   console.log("param", param);

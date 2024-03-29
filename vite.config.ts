@@ -19,14 +19,14 @@ export default defineConfig(() => {
         ],
         imports: [
           'vue',
-          // {
-          //   'naive-ui': [
-          //     'useDialog',
-          //     'useMessage',
-          //     'useNotification',
-          //     'useLoadingBar'
-          //   ]
-          // }
+          {
+            'naive-ui': [
+              'useDialog',
+              'useMessage',
+              'useNotification',
+              'useLoadingBar'
+            ]
+          }
         ],
         dts: './auto-imports.d.ts',
         resolvers: [ElementPlusResolver()],

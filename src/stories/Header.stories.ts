@@ -8,15 +8,17 @@ const meta = {
    * See https://storybook.js.org/docs/configure/#configure-story-loading
    * to learn how to generate automatic titles
    */
-  title: 'Example/Header',
+  title: 'component/Header',
   component: MyHeader,
-  render: (args: any) => ({
-    components: { MyHeader },
-    setup() {
-      return { args };
-    },
-    template: '<my-header :user="args.user" />',
-  }),
+  render: (args: any) => (
+    {
+      components: { MyHeader },
+      setup() {
+        return { args };
+      },
+      template: '<my-header :user="args.user" />',
+    }
+  ),
   parameters: {
     // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
     layout: 'fullscreen',
@@ -41,8 +43,8 @@ export const LoggedIn: Story = {
   },
 };
 
-export const LoggedOut: Story = {
-  args: {
-    user: null,
-  },
-};
+// export const LoggedOut: Story = {
+//   args: {
+//     user: null,
+//   },
+// };

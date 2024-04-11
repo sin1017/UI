@@ -14,7 +14,6 @@ declare module 'vue' {
     ElDefaultTable: typeof import('./src/components/defaultTable/elementUI/ElDefaultTable.vue')['default']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
-    ElGroup: typeof import('element-plus/es')['ElGroup']
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElInputNumber: typeof import('element-plus/es')['ElInputNumber']
